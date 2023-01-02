@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Forget Password</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            .wrapper{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                flex-direction: column;
+                background: linear-gradient(90deg, #c7c5f4, #776bcc);/* width: 250px; */
+            }
+            .extra{
+	padding: 0.2rem;
+
+}
+.extrabtn{
+	padding: 0.3rem;
+	background-color: #7f53ac;
+	color: white;
+	border: none;
+}
+        </style>
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>Change password</h1>
+            <form action="/update_password" method="post">
+                <input class="extra" type="text" value="<%= email %>" name="email"  unselectable="on" onselectstart="return false;" onmousedown="return false;">
+                <br>
+                <br>
+                <input class="extra" type="password" name="password" placeholder="Password" required>
+                <br>
+                <br>
+                <button type="submit" class="extrabtn">Update Password</button>
+            </form>
+        </div>
+    </body>
+</html>

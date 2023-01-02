@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Profile</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      font-family: "Poppins", sans-serif;
+      background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradient 30s ease infinite;
+      position: relative;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      place-items: center;
+      padding-block: 5vh;
+      gap: 0.57rem;
+    }
+
+    .container .avatar {
+      grid-column: span 2;
+      display: flex;
+      justify-content: center;
+      width: 250px;
+    }
+
+    .container .avatar img {
+      width: 175px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .container .username {
+      grid-column: span 2;
+      margin-block-start: 0.75rem;
+      margin-block-end: 2rem;
+      color: #fff;
+    }
+
+    .container .username h3 {
+      text-align: center;
+    }
+
+    .container .button {
+      width: 400px;
+      background-color: transparent;
+      color: #fff;
+      border: 1.5px solid #fff;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: color 0.3s, background-color 0.8s;
+    }
+
+    .container .button:hover {
+      color: #1d1e22;
+      background-color: #fff;
+    }
+    .container .button2 {
+
+      background-color: transparent;
+      color: #fff;
+      border: 1.5px solid #fff;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: color 0.3s, background-color 0.8s;
+    }
+
+    .container .button2:hover {
+      color: #1d1e22;
+      background-color: #fff;
+    }
+
+    .page {
+      position: fixed;
+      inset: 0;
+      overflow-y: auto;
+      transform: scale(0);
+      transition: transform 0.3s;
+      background-color: #eff2f5;
+      color: #1d1e22;
+    }
+
+    .page__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5vw;
+      background-color: #fff;
+      font-weight: bold;
+      box-shadow: 0px 5px 5px 0px #e5e5e5;
+    }
+
+    .page__title {
+      font-size: 1.5rem;
+    }
+
+    .page__close {
+      display: flex;
+      cursor: pointer;
+    }
+
+    .page__body {
+      padding: 2rem 5vw;
+      overflow-y: auto;
+    }
+
+    .page--active {
+      transform: scale(1);
+    }
+
+    h4 {
+      margin-block: 10px;
+    }
+
+    p {
+      margin-block: 15px;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: inherit;
+      font-family: inherit;
+    }
+
+    .modal-window {
+      position: fixed;
+      background-color: rgba(255, 255, 255, 0.25);
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+
+    .modal-window:target {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-window>div {
+      width: 400px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 2em;
+      background: white;
+    }
+
+    .modal-window header {
+      font-weight: bold;
+    }
+
+    .modal-window h1 {
+      font-size: 150%;
+      margin: 0 0 15px;
+    }
+
+    .modal-close {
+      color: #aaa;
+      line-height: 50px;
+      font-size: 80%;
+      position: absolute;
+      right: 0;
+      text-align: center;
+      top: 0;
+      width: 70px;
+      text-decoration: none;
+    }
+
+    .modal-close:hover {
+      color: black;
+    }
+
+    /* Demo Styles */
+    html,
+    body {
+      height: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      font-size: inherit;
+    }
+
+    .container {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .modal-window>div {
+      border-radius: 1rem;
+    }
+
+    .modal-window div:not(:last-of-type) {
+      margin-bottom: 15px;
+    }
+
+    .wrap {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .extra {
+      padding: 0.2rem;
+      width: 50%;
+    }
+    .extrabtn{
+	padding: 0.5rem;
+  border-radius: 10px;
+	background-color: #7f53ac;
+	color: white;
+	border: none;
+  background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradient 30s ease infinite;
+}
+.extrabtn:hover{
+  opacity: 0.8;
+}
+
+    .extra-label {
+      width: 30%;
+    }
+    .button__icon{
+      width: 25%;
+    }
+    .cont{
+      display: flex;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" >
+</head>
+
+<body>
+  <div id="main" class="container">
+    <div class="avatar">
+      <% if(Object.keys(image).length===0){%>
+        <img
+          src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255710-stock-illustration-avatar-vector-male-profile-gray.jpg" />
+        <% }else{%>
+          <img src="data:image/<%=image.contentType%>;base64,<%=image.data.toString('base64')%>" />
+          <% } %>
+    </div>
+    <div class="username">
+      <h3 id="uname"></h3>
+      <div class="cont">
+
+        <div class="button2">
+          <a href="#open-modal2">Edit details</a><br>
+        </div>
+        <div class="button2">
+          <a href="#open-modal">Change Password</a><br>
+        </div>
+        <div class="button2">
+          <form action="/logout" method="post">
+            <button type="submit"> Logout </button>
+          </form>
+        </div>
+    </div>
+    </div>
+  </div>
+  <div id="open-modal" class="modal-window">
+    <div>
+      <a href="#" title="Close" class="modal-close">Close</a>
+      <h1>Fill out 👇</h1>
+      <br>
+      <form action="/change_password" method="post">
+        <input class="extra" type="password" name="password" placeholder="Current Password" required>
+        <input class="extra" type="password" name="new_password" placeholder="New Password" required>
+        <button class="extrabtn" type="submit">Forget Password</button>
+      </form>
+    </div>
+  </div>
+  <div id="open-modal2" class="modal-window">
+    <div>
+      <a href="#" title="Close" class="modal-close">Close</a>
+      <h1>Fill out 👇</h1>
+      <br>
+      <form id="form2" action="/update_details" enctype="multipart/form-data" method="post">
+      </form>
+    </div>
+  </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const config = {
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    window.onload = function () {
+      getUserData();
+    };
+    function getUserData() {
+      axios
+        .post(`/fetch_data`, JSON.stringify({}), config)
+        .then((res) => {
+          if (res.status !== 200) {
+            alert("Failed to Read, Please try again!");
+            return;
+          }
+          console.log(res.data);
+          const userData = res.data.user;
+          document.getElementById('uname').innerText = res.data.user.name;
+          document.getElementById("main").insertAdjacentHTML('beforeend', Object.keys(userData).map((item) => {
+            if (item == 'profile') {
+              temp = userData[item];
+              return `
+              `
+            }
+            const data = userData[item];
+            if (!data) {
+              return ``;
+            }
+            var s = item.charAt(0).toUpperCase() + item.substring(1);
+            return `<div class="button" >
+              <div class="button__icon">
+                ${s} :             
+                </div>
+              <div class="button__text">${data}
+              </div>
+            </div>`;
+          }).join(''));
+          document.getElementById('form2').insertAdjacentHTML('beforeend',
+            `<div class="wrap">
+            <label for="name" class="extra-label">Username</label>
+            <input class="extra" disabled type="text" value=${userData.username} name="username"  unselectable="on" onselectstart="return false;" onmousedown="return false;"><br>
+            </div>
+            <div class="wrap">
+            <label for="name" class="extra-label">E-mail</label>
+            <input class="extra" disabled type="text" value=${userData.email} name="email"  unselectable="on" onselectstart="return false;" onmousedown="return false;"><br>
+            </div>
+            <div class="wrap">
+            <label for="name" class="extra-label">Name</label>
+            <input class="extra" type="text" value="${userData.name}" name="name" placeholder="name"  unselectable="on" onselectstart="return false;" onmousedown="return false;"><br>
+            </div>
+            <div class="wrap" >
+            <label for="phone" class="extra-label">Phone</label>
+            <input class="extra" type="text" value="${userData.phone}" name="phone" placeholder="Phone no." required><br>
+            </div>
+            <div class="wrap">
+                    <label for="college" class="extra-label">College</label>
+                    <input class="extra" type="text" value="${userData.college}" name="college" placeholder="College" required><br>
+            </div>
+            <div class="wrap">
+                      <label for="state" class="extra-label">State</label>
+                      <input class="extra" type="text" value="${userData.state}" name="state" placeholder="State" required><br>
+            </div>
+            <div class="wrap">
+                        <label for="country" class="extra-label">Country</label>
+                        <input class="extra" type="text" value="${userData.country}" name="country" placeholder="Country" required><br>
+            </div>
+            <div class="wrap">
+              <label for="image" class="extra-label">Profile Picture
+                <small style="font-size: 12px; color: red;">Only .png</small>
+                </label>
+                  <input type="file" class="extra" name="image" value="" required><br>
+            </div><br>
+          <button class="extrabtn" type="submit">Update Details</button>
+          `);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Something went wrong!");
+        });
+    }
+  </script>
+</body>
+
+</html>
