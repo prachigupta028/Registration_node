@@ -20,9 +20,6 @@ const cleanUpAndValidate = ({ name, email, username, password, phone }) => {
     if (password.length < 5) reject("Password too short");
 
     if (password.length > 200) reject("Password too long");
-
-    // if (phone.length > 10) reject("Phone number too large");
-    // if (phone.length < 10) reject("Phone number too short");
     resolve();
   });
 };
@@ -42,8 +39,8 @@ const sendVerifcationEmail = (email, verificationToken) => {
     secure: true,
     service: "Gmail",
     auth: {
-      user: "tilootech@gmail.com",
-      pass: "toczjuynshfecavn",
+      user: "pg3362474@gmail.com",
+      pass: "iakkmtmbyblprnna",
     },
   });
 
@@ -52,7 +49,7 @@ const sendVerifcationEmail = (email, verificationToken) => {
     from: sender,
     to: email,
     subject: "Email Verification for Node App",
-    html: `Press <a href=https://node-app-production-ee83.up.railway.app/verifyEmail/${verificationToken}> Here </a> to verify your account.`,
+    html: `Press <a href=https://registrationnode-production.up.railway.app/verifyEmail/${verificationToken}> Here </a> to verify your account.`,
   };
 
   mailer.sendMail(mailOptions, function (err, response) {
@@ -61,15 +58,15 @@ const sendVerifcationEmail = (email, verificationToken) => {
   });
 };
 
-const send_forget_mail = (email,verificationToken) => {
+const send_forget_mail = (email, verificationToken) => {
   let mailer = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     service: "Gmail",
     auth: {
-      user: "tilootech@gmail.com",
-      pass: "toczjuynshfecavn",
+      user: "pg3362474@gmail.com",
+      pass: "iakkmtmbyblprnna",
     },
   });
 
@@ -78,13 +75,18 @@ const send_forget_mail = (email,verificationToken) => {
     from: sender,
     to: email,
     subject: "Foget your password",
-    html: `Press <a href=https://node-app-production-ee83.up.railway.app/forgetPassword/${verificationToken}> Here </a> forget password for your account`,
+    html: `Press <a href=https://registrationnode-production.up.railway.app/forgetPassword/${verificationToken}> Here </a> forget password for your account`,
   };
 
   mailer.sendMail(mailOptions, function (err, response) {
     if (err) throw err;
     else console.log("Mail has been sent successfully");
   });
-}
+};
 
-module.exports = { cleanUpAndValidate, jwtSign, sendVerifcationEmail, send_forget_mail };
+module.exports = {
+  cleanUpAndValidate,
+  jwtSign,
+  sendVerifcationEmail,
+  send_forget_mail,
+};
